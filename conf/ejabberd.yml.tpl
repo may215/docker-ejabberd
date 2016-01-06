@@ -110,13 +110,11 @@ s2s_protocol_options:
 ###   ==============
 ###   AUTHENTICATION
 
-auth_method: http
-auth_opts:
-  host: env['EJABBERD_AUTH_HOST']
-  connection_pool_size: 10
-  connection_opts: []
-  basic_auth: ""
-  path_prefix: "/"
+auth_method: internal
+{%- if 'anonymous' in env.get('EJABBERD_AUTH_METHOD', 'internal').split() %}
+anonymous_protocol: login_anon
+allow_multiple_connections: true
+{% endif %}
 
 
 {%- if 'anonymous' in env.get('EJABBERD_AUTH_METHOD', 'internal').split() %}
@@ -317,10 +315,6 @@ modules:
     {% endif %}
   mod_http_upload_quota:
     max_days: 10
-  mod_rest: {}
-  mod_muc_admin: {}
-
-allow_contrib_modules: true
 
 ###   ============
 ###   HOST CONFIG
