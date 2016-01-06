@@ -24,6 +24,11 @@ RUN groupadd -r $EJABBERD_USER \
        -d $EJABBERD_HOME \
        $EJABBERD_USER
 
+# Run Update
+RUN apt-get update
+RUN apt-get -y install sudo
+RUN echo "$EJABBERD_USER:$EJABBERD_USER" | sudo chpasswd && sudo adduser $EJABBERD_USER sudo
+
 # Install packages and perform cleanup
 RUN set -x \
 	&& buildDeps=' \
