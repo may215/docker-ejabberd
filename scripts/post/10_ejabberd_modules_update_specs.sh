@@ -14,11 +14,21 @@ run_modules_update_specs() {
     ${EJABBERDCTL} modules_update_specs
 }
 
+run_modules_install_contrib() {
+    echo -n 'Installing modules from ejabberd-contrib... '
+    echo -n 'Done mod_rest...'
+    ${EJABBERDCTL} mod_rest
+    echo -n 'Done mod_rest...'
+    ${EJABBERDCTL} ejabberd_auth_http
+    echo -n 'Done ejabberd_auth_http...'
+}
+
 
 is_true ${EJABBERD_SKIP_MODULES_UPDATE} \
     && exit 0
 
 run_modules_update_specs
 
+run_modules_install_contrib
 
 exit 0
